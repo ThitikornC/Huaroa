@@ -1,11 +1,24 @@
 {
-  "name": "huaroa",
+  "name": "emoji-game",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.18.2"
-  }
+    "express": "^4.21.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThitikornC/Huaroa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThitikornC/Huaroa/issues"
+  },
+  "homepage": "https://github.com/ThitikornC/Huaroa#readme",
+  "description": ""
 }
