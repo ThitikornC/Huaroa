@@ -38,7 +38,7 @@ let emojiData = null;
 // โหลด emoji database
 async function loadEmojiData() {
   if(!emojiData){
-    const res = await fetch('https://raw.githubusercontent.com/iamcal/emoji-data/master/emoji.json');
+const res = await fetch('emoji.json');
     emojiData = await res.json();
   }
 }
