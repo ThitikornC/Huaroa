@@ -38,7 +38,7 @@ let emojiData = null;
 // โหลด emoji database
 async function loadEmojiData() {
   if(!emojiData){
-const res = await fetch('emoji.json');
+    const res = await fetch('emoji.json');
     emojiData = await res.json();
   }
 }
@@ -59,10 +59,13 @@ async function saveConfig(){
   if(!category){ alert("กรุณาใส่ชื่อหมวดหมู่"); return; }
   if(correct.length===0){ alert("กรุณาใส่คำที่ถูกต้องอย่างน้อย 1 คำ"); return; }
 
-  // ตรวจสอบ emoji
+  // ตรวจสอบ emoji (case-insensitive และตัดตัวเลขท้าย)
   let missing = [];
   [...correct,...wrong].forEach(word=>{
-    const found = emojiData.find(e=>e.short_names.includes(word));
+    const w = word.toLowerCase().trim();
+    const found = emojiData.find(e =>
+      e.short_names.some(sn => sn.toLowerCase().replace(/\d+$/, '') === w)
+    );
     if(!found) missing.push(word);
   });
 

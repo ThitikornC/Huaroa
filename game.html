@@ -13,7 +13,6 @@ button { font-size: 16px; padding: 5px 10px; margin: 5px; cursor: pointer; }
 #zones { display: flex; justify-content: space-around; margin-top: 20px; }
 .zone { width: 40%; height: 150px; border: 2px dashed #333; border-radius: 10px; line-height: 150px; font-size: 20px; color: #333; }
 
-/* Popup */
 #scorePopup {
   display:none;
   position:fixed;
@@ -42,7 +41,6 @@ button { font-size: 16px; padding: 5px 10px; margin: 5px; cursor: pointer; }
 </div>
 <p>Score: <span id="score">0</span></p>
 
-<!-- Popup -->
 <div id="scorePopup">
   <p>🎉 Your Score: <span id="finalScore"></span> 🎉</p>
   <button onclick="closePopup()">Close</button>
@@ -53,24 +51,20 @@ let emojiData=null, audioCtx, baseFreq=200;
 const sparkleChars=['✨','🌟','💫','⭐'];
 let createdEmojis={}, score=0;
 
-// โหลด config จาก localStorage
 let teacherConfig = JSON.parse(localStorage.getItem('emojiGameConfig') || '{}');
 document.getElementById('categoryName').innerText = teacherConfig.categoryName || 'Unknown';
 
-// ปุ่มย้อนกลับหน้าครู
 function goToTeacher(){
-  window.location.href = 'teacher.html'; // เปลี่ยนเป็นไฟล์หน้าครูของคุณ
+  window.location.href = 'teacher.html';
 }
 
-// โหลด emoji data
 async function loadEmojiData() {
   if(!emojiData){
-const res = await fetch('emoji.json');
+    const res = await fetch('emoji.json');
     emojiData=await res.json();
   }
 }
 
-// particle effect
 function createParticle(x,y){
   const p=document.createElement('div');
   p.className='particle';
@@ -81,7 +75,6 @@ function createParticle(x,y){
   setTimeout(()=>p.remove(),600);
 }
 
-// เสียงลาก
 function initAudio(){
   if(!audioCtx){ 
     audioCtx=new (window.AudioContext||window.webkitAudioContext)(); 
@@ -100,7 +93,6 @@ function playSlideTone(freqStart,freqEnd){
   osc.start(); osc.stop(audioCtx.currentTime+0.2);
 }
 
-// สร้าง emoji
 function createEmoji(char,keyWord){
   if(createdEmojis[keyWord]) return;
   const emoji=document.createElement('div'); 
@@ -124,7 +116,6 @@ function createEmoji(char,keyWord){
     baseFreq=baseFreq>=800?200:baseFreq+50;
   }
 
-  // Desktop
   emoji.addEventListener('mousedown',e=>{
     initAudio(); e.preventDefault();
     offsetX=e.clientX-emoji.offsetLeft; offsetY=e.clientY-emoji.offsetTop;
@@ -138,7 +129,6 @@ function createEmoji(char,keyWord){
     document.addEventListener('mouseup',onUp);
   });
 
-  // Mobile
   emoji.addEventListener('touchstart',e=>{ 
     initAudio(); const t=e.touches[0]; offsetX=t.clientX-emoji.offsetLeft; offsetY=t.clientY-emoji.offsetTop; 
   });
@@ -170,18 +160,14 @@ function createEmoji(char,keyWord){
   createdEmojis[keyWord]=emoji;
 }
 
-// ตรวจสอบจบเกม
 function checkEndGame(){
   if(Object.keys(createdEmojis).length===0){
     document.getElementById('finalScore').innerText=score;
     document.getElementById('scorePopup').style.display='block';
   }
 }
-function closePopup(){
-  document.getElementById('scorePopup').style.display='none';
-}
+function closePopup(){ document.getElementById('scorePopup').style.display='none'; }
 
-// โหลด emoji ทั้งหมด
 async function startGame(){
   if(!teacherConfig.correct || teacherConfig.correct.length===0){ 
     alert("No teacher config found! กรุณาไปหน้าครูตั้งค่า"); 
@@ -193,12 +179,16 @@ async function startGame(){
 
   let missing=[];
   [...teacherConfig.correct,...teacherConfig.wrong].forEach(word=>{
-    const found=emojiData.find(e=>e.short_names.includes(word));
+    const w = word.toLowerCase().trim();
+    const found = emojiData.find(e =>
+      e.short_names.some(sn => sn.toLowerCase().replace(/\d+$/, '') === w)
+    );
     if(found){ 
-      const char=String.fromCodePoint(...found.unified.split('-').map(u=>parseInt(u,16))); 
-      createEmoji(char,word);
+      const char = String.fromCodePoint(...found.unified.split('-').map(u=>parseInt(u,16))); 
+      createEmoji(char, word);
     } else { missing.push(word); }
   });
+
   if(missing.length>0){ alert("คำต่อไปนี้ไม่มี emoji: "+missing.join(', ')); }
 }
 
