@@ -416,6 +416,26 @@ button { cursor:pointer; }
     margin: 6px auto !important;
   }
 }
+
+/* iPad landscape: reduce panel width to ~40% to match user's request
+   This overrides the inline flex/max-width using !important so the
+   panels narrow in landscape on typical tablet viewports */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .main-container > div[style*="display:flex"] > div {
+    flex: 0 0 40% !important;
+    max-width: calc(40% - 12px) !important;
+    box-sizing: border-box !important;
+  }
+  .main-container > div[style*="display:flex"] > div .file-input-wrapper {
+    max-width: 64% !important; /* tighten upload button wrapper to avoid overflow */
+    margin: 6px auto !important;
+    display: block !important;
+  }
+  .main-container > div[style*="display:flex"] > div .image-preview-item {
+    width: 88px !important;
+    height: 88px !important;
+  }
+}
 @media (min-width: 1025px) {
   .info-inputs input:nth-child(1) {
     width: 120px;
@@ -592,7 +612,7 @@ button { cursor:pointer; }
   <div style="display:flex; gap:5px; justify-content:center; margin-top:20px;">
   <div style="flex:1 1 calc(50% - 12px); max-width:calc(50% - 12px); background:rgba(76, 175, 80, 0.1); padding:12px; border-radius:10px; border:2px solid #4CAF50;">
       <label style="color:#4CAF50; font-weight:bold;">รูปที่ถูกต้อง ✅</label><br>
-      <div class="file-input-wrapper" style="display: flex; justify-content: center; margin-top:10px;">
+      <div class="file-input-wrapper" style="margin-top:10px;">
         <label class="file-input-label file-input-label-correct">เลือกภาพ
           <input type="file" id="correctImageInput" accept="image/*" onchange="handleImageUpload(event, 'correct')">
         </label>
@@ -601,7 +621,7 @@ button { cursor:pointer; }
     </div>
   <div style="flex:1 1 calc(50% - 12px); max-width:calc(50% - 12px); background:rgba(244, 67, 54, 0.1); padding:12px; border-radius:10px; border:2px solid #f44336;">
       <label style="color:#f44336; font-weight:bold;">รูปที่ผิด ❌</label><br>
-      <div class="file-input-wrapper" style="display: flex; justify-content: center; margin-top:10px;">
+      <div class="file-input-wrapper" style="margin-top:10px;">
         <label class="file-input-label file-input-label-wrong">เลือกภาพ
           <input type="file" id="wrongImageInput" accept="image/*" onchange="handleImageUpload(event, 'wrong')">
         </label>
