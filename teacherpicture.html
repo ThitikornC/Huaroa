@@ -144,6 +144,55 @@ body {
     width: 100% !important;
   }
   .main-container {
+    /* User-requested orientation-specific adjustments:
+       - Portrait: reduce the inner gray/white frames so the colored panels appear narrower.
+       - Landscape: reduce the inner white container width so the layout breathes horizontally.
+       These overrides are conservative and use vw-based max-width to keep things inside the main container. */
+  @media (orientation: portrait) {
+    .info-section, .main-container {
+      /* shrink the inner white/gray frames on portrait to give more page margin */
+      max-width: 86vw !important;
+      width: 86vw !important;
+      padding: 10px !important;
+    }
+    /* make the colored panels narrower inside the main container on portrait */
+    .main-container > div[style*="display:flex"] > div {
+      flex: 1 1 calc(40% - 12px) !important; /* narrower columns */
+      max-width: calc(40% - 12px) !important;
+      padding: 8px !important;
+    }
+    .main-container > div[style*="display:flex"] {
+      gap: 10px !important;
+    }
+    .main-container > div[style*="display:flex"] > div .file-input-wrapper {
+      max-width: 84% !important;
+      margin: 6px auto !important;
+    }
+  }
+
+  @media (orientation: landscape) {
+    .info-section, .main-container {
+      /* reduce the inner white container width in landscape so content doesn't span too wide */
+      max-width: 80vw !important;
+      width: 80vw !important;
+      padding: 12px !important;
+    }
+    /* panels slightly less narrow than portrait but still reduced from full-half */
+    .main-container > div[style*="display:flex"] > div {
+      flex: 1 1 calc(45% - 12px) !important;
+      max-width: calc(45% - 12px) !important;
+      padding: 8px !important;
+    }
+    .main-container > div[style*="display:flex"] {
+      gap: 12px !important;
+    }
+    .main-container > div[style*="display:flex"] > div .file-input-wrapper {
+      max-width: 88% !important;
+      margin: 6px auto !important;
+    }
+  }
+
+  </style>
     max-width: 900px !important;
     width: 100% !important;
   }
