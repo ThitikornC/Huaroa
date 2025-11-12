@@ -404,8 +404,8 @@ button { cursor:pointer; }
   }
   /* make the inner area inside the red/green panels larger (user asked about contents inside frames) */
   .main-container > div[style*="display:flex"] > div .file-input-wrapper {
-    max-width: 86% !important;
-    margin: 8px auto !important;
+    max-width: 68% !important;
+    margin: 6px auto !important;
   }
   .main-container > div[style*="display:flex"] > div .file-input-label,
   .main-container > div[style*="display:flex"] > div .file-input-label-correct,
@@ -414,9 +414,9 @@ button { cursor:pointer; }
     font-size: 13px !important;
   }
   .main-container > div[style*="display:flex"] > div .image-preview-item {
-    width: 88px !important;
-    height: 88px !important;
-    margin: 8px auto !important;
+    width: 64px !important;
+    height: 64px !important;
+    margin: 6px auto !important;
   }
 }
 
@@ -433,10 +433,10 @@ button { cursor:pointer; }
     justify-content: center !important;
   }
   /* Reduce inner content width so items inside the colored frames don't stretch too wide */
-  /* enlarge inner area inside the colored panels */
+  /* Reduce inner content width so items inside the colored frames don't stretch too wide */
   .main-container > div[style*="display:flex"] > div .file-input-wrapper {
-    max-width: 86% !important;
-    margin: 8px auto !important;
+    max-width: 68% !important;
+    margin: 6px auto !important;
     display: block !important;
     box-sizing: border-box !important;
   }
@@ -449,9 +449,9 @@ button { cursor:pointer; }
     font-size: 13px !important;
   }
   .main-container > div[style*="display:flex"] > div .image-preview-item {
-    width: 88px !important;
-    height: 88px !important;
-    margin: 8px auto !important;
+    width: 64px !important;
+    height: 64px !important;
+    margin: 6px auto !important;
   }
 }
 
@@ -499,16 +499,16 @@ button { cursor:pointer; }
       padding: 12px !important;
     }
     .main-container > div[style*="display:flex"] > div {
-      flex: 0 0 46% !important;
-      max-width: 46% !important;
-      padding: 10px !important;
+      flex: 0 0 36% !important;
+      max-width: 36% !important;
+      padding: 8px !important;
     }
     .main-container > div[style*="display:flex"] > div .file-input-wrapper {
-      max-width: 86% !important;
+      max-width: 76% !important;
     }
     .main-container > div[style*="display:flex"] > div .image-preview-item {
-      width: 96px !important;
-      height: 96px !important;
+      width: 80px !important;
+      height: 80px !important;
     }
   }
   /* Portrait iPad Safari */
@@ -519,12 +519,12 @@ button { cursor:pointer; }
       padding: 12px !important;
     }
     .main-container > div[style*="display:flex"] > div {
-      flex: 0 0 38% !important; /* slightly narrower inside Safari */
-      max-width: 38% !important;
+      flex: 0 0 36% !important; /* match Safari landscape */
+      max-width: 36% !important;
       padding: 8px !important;
     }
     .main-container > div[style*="display:flex"] > div .file-input-wrapper {
-      max-width: 78% !important;
+      max-width: 76% !important;
     }
     .image-preview-item {
       width: 80px !important;
@@ -580,6 +580,45 @@ button { cursor:pointer; }
     border: 3px solid #74640a !important;
     box-sizing: border-box !important;
     margin: 5px auto !important;
+  }
+}
+/* Simple final safety: keep red/green panels from exceeding the trainer/main container
+   for both portrait and landscape. This is intentionally conservative and overrides
+   earlier tablet rules so nothing hangs outside the container. */
+@media (min-width: 768px) {
+  .main-container {
+    overflow: hidden; /* prevent accidental horizontal overflow */
+  }
+  .main-container > div[style*="display:flex"] {
+    display: flex !important;
+    flex-wrap: wrap !important; /* allow wrap on very small widths */
+    gap: 12px !important;
+    justify-content: center !important;
+  }
+  .main-container > div[style*="display:flex"] > div {
+    box-sizing: border-box !important;
+    /* auto-size panels relative to the main container: two columns that adapt */
+    flex: 1 1 calc(50% - 12px) !important; /* flexible basis minus gap */
+    max-width: calc(50% - 12px) !important;
+    min-width: 0 !important; /* allow panels to shrink with container */
+    margin: 0 !important;
+    padding: 8px !important;
+  }
+  /* ensure inner controls scale and don't overflow the panel */
+  .main-container > div[style*="display:flex"] > div .file-input-wrapper {
+    max-width: 90% !important;
+    display: block !important;
+  }
+  .main-container > div[style*="display:flex"] > div .file-input-label,
+  .main-container > div[style*="display:flex"] > div .file-input-label-correct,
+  .main-container > div[style*="display:flex"] > div .file-input-label-wrong {
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+  }
+  .main-container > div[style*="display:flex"] > div .image-preview-item {
+    max-width: 120px !important; /* scale but cap size */
+    width: 100% !important;
+    height: auto !important;
   }
 }
 /* iPad Pro specific tweaks (11" and 12.9") — make portrait and landscape use the same panel sizing */
