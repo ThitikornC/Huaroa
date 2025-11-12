@@ -539,43 +539,31 @@ button { cursor:pointer; }
   }
 }
 
-/* iPad Pro 13-inch specific adjustments */
+/* iPad Pro 13-inch adjustments based on teachermatch.html */
 @media (min-width: 1366px) and (max-width: 1366px) {
+  .main-container {
+    max-width: 85% !important;
+    width: 85% !important;
+    padding: 6px !important;
+    border: 3px solid #74640a !important;
+  }
   .main-container > div[style*="display:flex"] > div {
-    flex: 0 0 30% !important; /* Adjust panel width to 30% */
+    flex: 0 0 30% !important;
     max-width: calc(30% - 12px) !important;
     box-sizing: border-box !important;
   }
   .main-container > div[style*="display:flex"] > div .file-input-wrapper {
-    max-width: 68% !important; /* Adjust file input wrapper */
+    max-width: 68% !important;
     margin: 6px auto !important;
     display: block !important;
   }
   .main-container > div[style*="display:flex"] > div .image-preview-item {
-    width: 96px !important; /* Adjust preview image size */
+    width: 96px !important;
     height: 96px !important;
     margin: 6px auto !important;
   }
 }
 
-/* Final override: make colored panels size flexibly with .main-container
-   - Two columns when there's room, each using roughly half the container (minus gap)
-   - Collapse to full-width on small screens
-   - This comes last to override earlier fixed-percentage rules */
-@media (min-width: 768px) {
-  .main-container > div[style*="display:flex"] {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 12px !important;
-    justify-content: center !important;
-  }
-  .main-container > div[style*="display:flex"] > div {
-    flex: 1 1 calc(50% - 12px) !important;
-    max-width: calc(50% - 12px) !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-  }
-}
 @media (max-width: 767px) {
   .main-container > div[style*="display:flex"] > div {
     flex: 1 1 100% !important;
