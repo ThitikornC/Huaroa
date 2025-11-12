@@ -601,6 +601,15 @@ button { cursor:pointer; }
     height: 88px !important;
   }
 }
+
+/* Increase red/green panel width by 50% for iPad */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .main-container > div[style*="display:flex"] > div {
+    flex: 0 0 45% !important; /* Increase panel width to 45% */
+    max-width: calc(45% - 12px) !important;
+    box-sizing: border-box !important;
+  }
+}
 </style>
 </head>
 <body>
