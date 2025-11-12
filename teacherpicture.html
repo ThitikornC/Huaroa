@@ -615,15 +615,16 @@ button { cursor:pointer; }
 @media (min-width: 768px) and (max-width: 1366px) and (orientation: landscape) {
   .main-container > div[style*="display:flex"] > div .file-input-wrapper {
     margin-left: auto !important; /* Reset left margin */
-    margin-right: 20% !important; /* Shift white box 20% to the right */
+    margin-right: 25% !important; /* Shift white box 25% to the right (20% + 5%) */
   }
 }
 
 /* Reduce white box width inside red/green panels for portrait */
 @media (min-width: 768px) and (max-width: 1366px) and (orientation: portrait) {
   .main-container > div[style*="display:flex"] > div .file-input-wrapper {
-    max-width: 60% !important; /* Reduce width to 60% (40% reduction) */
+    max-width: 60% !important; /* Force width to 60% */
     margin: 0 auto !important; /* Center the box */
+    box-sizing: border-box !important; /* Ensure proper sizing */
   }
 }
 </style>
