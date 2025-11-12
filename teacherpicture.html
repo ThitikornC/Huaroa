@@ -388,7 +388,7 @@ button { cursor:pointer; }
 
 /* iPad / large tablet adjustments (reduce size of the green/red panels) */
 /* apply on large tablets in both portrait and landscape explicitly */
-@media (min-width: 768px) and (max-width: 1366px) and (orientation: portrait) {
+@media (min-width: 768px) and (max-width: 1365px) and (orientation: portrait) {
   .main-container > div[style*="display:flex"] > div {
     flex: 0 0 40% !important; /* narrower for iPad portrait */
     max-width: 40% !important;
@@ -422,7 +422,7 @@ button { cursor:pointer; }
   }
 }
 
-@media (min-width: 768px) and (max-width: 1366px) and (orientation: landscape) {
+@media (min-width: 768px) and (max-width: 1365px) and (orientation: landscape) {
   .main-container > div[style*="display:flex"] > div {
     flex: 0 0 40% !important; /* narrower for iPad landscape */
     max-width: 40% !important;
@@ -453,6 +453,51 @@ button { cursor:pointer; }
     width: 90px !important;
     height: 90px !important;
     margin: 8px auto !important;
+  }
+}
+
+/* Safari on iPad specific: tighten gray frames and panels further for better visual fit */
+@supports (-webkit-touch-callout: none) {
+  /* Portrait iPad Safari */
+  @media (min-width: 768px) and (max-width: 1365px) and (orientation: portrait) {
+    .info-section, .main-container {
+      max-width: 82vw !important;
+      width: 82vw !important;
+      padding: 12px !important;
+    }
+    .main-container > div[style*="display:flex"] > div {
+      flex: 0 0 38% !important; /* slightly narrower inside Safari */
+      max-width: 38% !important;
+      padding: 8px !important;
+    }
+    .main-container > div[style*="display:flex"] > div .file-input-wrapper {
+      max-width: 78% !important;
+    }
+    .image-preview-item {
+      width: 80px !important;
+      height: 80px !important;
+    }
+  }
+
+  /* Landscape iPad Safari */
+  @media (min-width: 768px) and (max-width: 1365px) and (orientation: landscape) {
+    .info-section, .main-container {
+      max-width: 80vw !important;
+      width: 80vw !important;
+      padding: 12px !important;
+    }
+    .main-container > div[style*="display:flex"] > div {
+      flex: 0 0 36% !important;
+      max-width: 36% !important;
+      padding: 8px !important;
+    }
+    .main-container > div[style*="display:flex"] > div .file-input-wrapper {
+      max-width: 76% !important;
+    }
+    .image-preview-item {
+      width: 80px !important;
+      height: 80px !important;
+    }
   }
 }
 @media (min-width: 1025px) {
