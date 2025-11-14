@@ -270,7 +270,7 @@ body {
 }
 
 @media (max-width: 767px) {
-  /* Mobile: allow panels to stack vertically for better flow */
+  /* Mobile: pair panels side-by-side like desktop */
   .client-row {
     flex-direction: row;
     max-width: 100%;
@@ -278,18 +278,18 @@ body {
     gap: clamp(0.6rem, 4vw, 1rem);
     -webkit-overflow-scrolling: touch;
     padding: 0 clamp(0.5rem, 3vw, 1rem);
-    /* Allow wrapping so panels stack on very small screens */
-    flex-wrap: wrap;
+    /* Force side-by-side pairing */
+    flex-wrap: nowrap;
   }
   .client-row .ClientName_Container:first-child,
   .client-row .ClientName_Container:last-child {
     transform: none;
   }
   .ClientName_Container {
-    /* On mobile, make each panel full width when stacked */
-    flex: 0 0 100%;
-    max-width: 100%;
-    width: 100%;
+    /* On mobile, make each panel 50% width to pair side-by-side */
+    flex: 0 0 50%;
+    max-width: 48%;
+    width: 50%;
     /* keep equal margin but smaller on phones */
     margin: clamp(0.4rem, 2.5vw, 0.6rem);
     min-height: 0;
@@ -297,6 +297,8 @@ body {
     /* padding 10px */
     padding: 10px;
     box-sizing: border-box;
+    margin: auto;
+    max-height: 100PX;
   }
 }
 
@@ -443,9 +445,14 @@ body {
   
   .neon-btn {
     border-width: 3px;
-    padding: 8.4px 19.6px;
+    padding: 5px 10px;
     /* match running-text size on mobile */
     font-size: 0.6rem;
+    /* ลดขนาดปุ่มบนมือถือ 40% (scale to 60%) */
+    transform: scale(0.6);
+    transform-origin: center center;
+    /* reduce visual footprint while preserving layout flow around it */
+    will-change: transform;
   }
   
   /* ป้องกัน text wrap */
@@ -538,7 +545,7 @@ body {
     <!-- Logo ลายน้ำ - ย้ายมาไว้ข้างนอก -->
 
     <!-- Running Text -->
-    <div style="display: flex; align-items: center; justify-content: center; gap: clamp(1rem, 2vw, 2rem); padding: 0 clamp(1rem,3vw,1.5rem); margin-top: clamp(2rem,4vw,3rem); margin-bottom: clamp(2rem,4vw,3rem); flex-wrap: wrap;">       
+    <div class="top-bar" style="display: flex; align-items: center; justify-content: center; gap: clamp(1rem, 2vw, 2rem); padding: 0 clamp(1rem,3vw,1.5rem); margin-top: clamp(2rem,4vw,3rem); margin-bottom: clamp(2rem,4vw,3rem); flex-wrap: wrap;">       
       <div class="running-text w-full max-w-[min(1200px,95vw)] overflow-hidden relative text-[clamp(0.875rem,1.5vw,1.25rem)] whitespace-nowrap" style="flex: 1 1 auto; min-width: 300px;">
         <div class="marquee">
           <div class="marquee-content">
