@@ -136,6 +136,170 @@ body {
   font-size: clamp(0.75rem, 1.25vw, 0.875rem);
 }
 
+/* Client info neon block (placed between running text and video) */
+.ClientName_Container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  padding: 10px;
+  /* give each panel an equal margin on all sides for consistent spacing */
+  margin: clamp(0.9rem, 1.8vw, 1.25rem);
+  /* ใช้สไตล์เดียวกับ .neon-btn (gradient) */
+  background: linear-gradient(180deg, #f8f6f0 0%, #fffef8 45%, #fff8e8 55%, #f5f0e5 100%);
+  border: 8px solid #74640a;
+  border-radius: 20px;
+  box-shadow: 1px 1px 0 #000, -10px 8px #3b3305, 0 0 28px rgba(255,230,160,0.62);
+  color: #000000;
+  /* ให้แต่ละบล็อกใช้พื้นที่ 46.8% ของแถว (ลด 10% จาก 52%) */
+  flex: 0 0 46.8%;
+  max-width: 340px;
+  max-height: 150PX;
+  /* เพิ่มความสูงแบบ responsive (ขยายขึ้นประมาณ +70% รวม) */
+  min-height: 0;
+  aspect-ratio: 1;
+  box-sizing: border-box;
+  /* smoother transform when nudging */
+  transition: transform 0.25s ease;
+  will-change: transform;
+  z-index: 18;
+}
+
+.ClientName_Container .ClientName {
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  letter-spacing: 0.2px;
+  color: #000;
+  /* เพิ่มเงาให้ข้อความเด่นขึ้น */
+  text-shadow: 0 2px 6px rgba(0,0,0,0.32), 0 1px 0 rgba(255,255,255,0.35);
+}
+
+.ClientName_Container .Date_install,
+.ClientName_Container .ClientNo {
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+  color: rgba(0,0,0,0.9);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.22);
+}
+
+.ClientName_Container.neon {
+  /* subtle neon glow like video wrapper */
+  box-shadow: 1px 1px 0 #000, -8px 6px #3b3305, 0 0 28px rgba(255,230,160,0.6), 0 10px 30px rgba(0,0,0,0.18);
+}
+
+/* Row wrapper to place two client panels side-by-side
+   (neutralized to avoid framed/boxed look) */
+.client-row {
+  display: flex;
+  gap: clamp(1rem, 2.5vw, 2rem); /* เพิ่มช่องว่างแนวนอนระหว่างสองกล่อง (responsive) */
+  justify-content: center; /* center the pair across the page */
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+  margin: clamp(0.5rem, 1vw, 1rem) 0; /* small vertical spacing only */
+
+  /* Force a single row on all screen sizes so the two panels stay side-by-side */
+  flex-wrap: nowrap;
+  overflow: visible;
+}
+
+/* Removed explicit sibling margin fallback; panels now use equal margins */
+
+/* Nudge left and right panels slightly outward for visual spacing */
+/* removed outward nudging to avoid framed appearance */
+
+/* Responsive adjustments: reduce nudge on tablets, stack on small phones */
+@media (max-width: 1023px) {
+  /* iPad / small tablets: keep panels inline but avoid framing */
+  .client-row {
+    max-width: none;
+    gap: clamp(0.6rem, 1.2vw, 1rem); /* ลดช่องว่างเล็กน้อยบน tablet */
+  }
+  .ClientName_Container {
+    /* make panels a bit narrower on tablets so they don't overflow */
+    /* reduce width by ~20% and height by ~50% for iPad per request, then +30% height, -10% width */
+    flex: 0 0 34.2%;
+    max-width: 34.2%;
+    /* เพิ่มความสูงขึ้น 70% รวม */
+    min-height: 0;
+    aspect-ratio: 1;
+    /* padding 10px */
+    padding: 10px;
+  }
+  .client-row > .ClientName_Container + .ClientName_Container {
+    margin-left: clamp(0.6rem, 1.2vw, 1rem); /* smaller margin on tablet */
+  }
+}
+
+/* iPad Pro (approx): slightly reduce width (~3%) and height (~10%) for the client panels */
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .ClientName_Container {
+    /* reduce width by ~3% (from 38% to ~35%), then -10% to 31.5% */
+    flex: 0 0 31.5%;
+    max-width: 31.5%;
+    /* reduce height to very small, like portrait */
+    min-height: 0;
+    aspect-ratio: 1;
+    /* padding 10px */
+    padding: 10px;
+  }
+  .client-row {
+    gap: clamp(0.5rem, 1.0vw, 0.9rem);
+  }
+}
+
+/* iPad portrait: increase client panel height and padding in portrait orientation */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+  .ClientName_Container {
+    /* reduce height to half */
+    min-height: 0;
+    aspect-ratio: 1;
+    /* padding 10px */
+    padding: 10px;
+    /* ensure panels remain side-by-side, reduce width 10% */
+    flex: 0 0 36%;
+    max-width: 36%;
+  }
+  .client-row {
+    gap: clamp(0.8rem, 1.6vw, 1.2rem);
+  }
+}
+
+@media (max-width: 767px) {
+  /* Mobile: allow panels to stack vertically for better flow */
+  .client-row {
+    flex-direction: row;
+    max-width: 100%;
+    overflow-x: visible;
+    gap: clamp(0.6rem, 4vw, 1rem);
+    -webkit-overflow-scrolling: touch;
+    padding: 0 clamp(0.5rem, 3vw, 1rem);
+    /* Allow wrapping so panels stack on very small screens */
+    flex-wrap: wrap;
+  }
+  .client-row .ClientName_Container:first-child,
+  .client-row .ClientName_Container:last-child {
+    transform: none;
+  }
+  .ClientName_Container {
+    /* On mobile, make each panel full width when stacked */
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
+    /* keep equal margin but smaller on phones */
+    margin: clamp(0.4rem, 2.5vw, 0.6rem);
+    min-height: 0;
+    aspect-ratio: 1;
+    /* padding 10px */
+    padding: 10px;
+    box-sizing: border-box;
+  }
+}
+
 @keyframes marquee { 
   0% { transform: translateX(0); } 
   100% { transform: translateX(-50%); } 
@@ -161,14 +325,51 @@ body {
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  padding: 0.5rem 1rem;
-  background: linear-gradient(180deg, rgba(239,187,91,0.68) 0%, rgba(255,220,140,0.55) 50%, #f5f0e5 100%);
-  border: 6px solid #74640a;
-  border-radius: 18px;
-  box-shadow: 1px 1px 0 #000, -8px 6px #3b3305, 0 0 20px rgba(255,230,160,0.55);
+  padding: 0.9rem 1.5rem;
+  background: linear-gradient(180deg, rgba(239,187,91,0.72) 0%, rgba(255,220,140,0.6) 50%, #f5f0e5 100%);
+  border: 8px solid #74640a;
+  border-radius: 22px;
+  box-shadow: 1px 1px 0 #000, -10px 8px #3b3305, 0 0 28px rgba(255,230,160,0.62);
   position: relative;
   overflow: hidden;
   z-index: 10;
+}
+
+/* Neon effect for video */
+.neon-wrapper {
+  display: inline-block;
+  padding: 12px;
+  border-radius: 22px;
+  /* ใช้โทนสีเดียวกับ .video-box (ทอง/ส้ม) แต่บางเบาเพื่อเป็น glow */
+  background: linear-gradient(180deg, rgba(239,187,91,0.12) 0%, rgba(255,220,140,0.08) 60%);
+  border: 8px solid #74640a;
+  /* เงาแบบเดียวกับปุ่ม: hard offset + deeper glow */
+  box-shadow: 1px 1px 0 #000, -10px 8px #3b3305, 0 0 30px rgba(255,230,160,0.7), 0 10px 36px rgba(0,0,0,0.2);
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.neon-wrapper:hover {
+  transform: translateY(-4px);
+  box-shadow: 1px 1px 0 #000, -8px 6px #3b3305, 0 0 36px rgba(255,230,160,0.75), 0 12px 40px rgba(0,0,0,0.25);
+}
+
+.neon-video {
+  display: block;
+  /* ให้วิดีโอมีเงาหลักเดียวกับปุ่ม และ glow เล็กน้อย */
+  box-shadow: 1px 1px 0 #000, -6px 5px #3b3305, 0 0 18px rgba(255,230,160,0.45);
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25)) drop-shadow(0 0 10px rgba(255,230,160,0.18));
+  transition: filter 0.35s ease, box-shadow 0.35s ease;
+}
+
+@keyframes neonPulse {
+  0%, 100% { box-shadow: 0 8px 30px rgba(0,0,0,0.35), 0 0 14px rgba(255,230,160,0.12); }
+  50% { box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,230,160,0.28); }
+}
+
+.neon-wrapper .neon-video {
+  animation: neonPulse 3.5s ease-in-out infinite;
 }
 
 /* New: center and make video responsive */
@@ -182,10 +383,10 @@ body {
 }
 .hero-video {
   width: 100%;
-  max-width: 920px; /* reasonable max for large screens */
+  max-width: 1120px; /* enlarged max for larger displays */
   height: auto;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  border-radius: 16px;
+  box-shadow: 0 10px 36px rgba(0,0,0,0.4);
   display: block;
 }
 
@@ -209,14 +410,7 @@ body {
   top: 15%;
   left: 10%;
 }
-
-.video-box::after {
-  width: 80px;
-  height: 80px;
-  bottom: 20%;
-  right: 15%;
-  animation-duration: 14s;
-}
+ 
 
 @keyframes bubbleMove {
   0% { transform: translateY(0) translateX(0); }
@@ -250,7 +444,8 @@ body {
   .neon-btn {
     border-width: 3px;
     padding: 8.4px 19.6px;
-    font-size: 0.7rem;
+    /* match running-text size on mobile */
+    font-size: 0.6rem;
   }
   
   /* ป้องกัน text wrap */
@@ -259,13 +454,22 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  /* Mobile: reduce client panel text to match running-text */
+  .ClientName_Container .ClientName,
+  .ClientName_Container .Date_install,
+  .ClientName_Container .ClientNo {
+    font-size: 0.6rem;
+    line-height: 1.1;
+  }
 }
 
 /* Desktop Layout */
 .desktop-layout {
   max-width: 1400px;
   width: 100%;
-  margin: 100px auto 0 auto !important;
+  /* reduce top margin so video and menu sit higher on the page */
+  margin: 40px auto 0 auto !important;
   padding: 0 clamp(2rem, 4vw, 4rem);
   display: flex !important;
   flex-direction: row !important;
@@ -354,12 +558,26 @@ body {
     </div>
 
     <!-- Video + Menu -->
+    <!-- Client info (neon) -->
+    <div class="client-row">
+      <div class="ClientName_Container neon scroll-reveal">
+        <div class="ClientName">Huaroi</div>
+        <div class="Date_install">Date Installed : 1-11-25</div>
+        <div class="ClientNo">Expiration Date : 1-12-25</div>
+      </div>
+      <div class="ClientName_Container neon scroll-reveal">
+        <div class="ClientName">Usernumber : No.001</div>
+      </div>
+    </div>
+
     <div class="desktop-layout">
         <div class="video-wrap">
-          <video id="heroVideo" class="hero-video" autoplay muted playsinline loop preload="auto" poster="./video/poster.jpg">
-            <source src="./video/kwang_Temporary.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
+          <div class="video-box neon-wrapper">
+            <video id="heroVideo" class="hero-video neon-video" autoplay muted playsinline loop preload="auto" poster="./video/poster.jpg">
+              <source src="./video/kwang_Temporary.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </div>
     </div>
 
